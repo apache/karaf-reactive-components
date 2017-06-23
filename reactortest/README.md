@@ -7,7 +7,9 @@ This example show how to combine reactor with an protocols in a loosely coupled 
 
 ## Build
 
+```
 mvn clean install
+```
 
 ## Environment
 
@@ -16,12 +18,14 @@ You also need a MQTT client.
 
 ## Install
 
+```
 config:property-set -p component.mqtt.MqttComponent serverUrl tcp://localhost:1883
 install -s mvn:org.eclipse.paho/org.eclipse.paho.client.mqttv3/1.1.1
 install -s mvn:org.reactivestreams/reactive-streams/1.0.0
 install -s mvn:io.projectreactor/reactor-core/3.0.7.RELEASE
 install -s wrap:mvn:io.projectreactor.addons/reactor-extra/3.0.7.RELEASE
 install -s mvn:net.lr/reactortest/0.0.1-SNAPSHOT
+```
 
 ## Test
 
