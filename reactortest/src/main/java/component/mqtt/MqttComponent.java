@@ -38,8 +38,7 @@ public class MqttComponent implements MComponent {
 
     @Override
     public <T> Publisher<T> from(String topic, Function<byte[], T> converter) throws Exception {
-        MqttSource<T> source = new MqttSource<T>(client, topic, converter);
-        return source;
+        return new MqttSource<T>(client, topic, converter);
     }  
     
     @Override
