@@ -1,4 +1,6 @@
-# Example for combining reactor and mqtt
+# Prototype of a combination of messaging and reactive streams
+
+## Example for combining reactor and mqtt
 
 The example [MqttExampleComponent](src/main/java/reactortest/MqttExampleComponent.java) receives Integers from the topic "input",
 computes the average over a sliding window of 2 elements and writes the results to the topic "output".
