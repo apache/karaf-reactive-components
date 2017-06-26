@@ -25,6 +25,7 @@ install -s mvn:org.eclipse.paho/org.eclipse.paho.client.mqttv3/1.1.1
 install -s mvn:org.reactivestreams/reactive-streams/1.0.0
 install -s mvn:io.projectreactor/reactor-core/3.0.7.RELEASE
 install -s wrap:mvn:io.projectreactor.addons/reactor-extra/3.0.7.RELEASE
+install -s mvn:javax.mail/mail/1.5.0-b01
 install -s mvn:net.lr/reactortest/0.0.1-SNAPSHOT
 ```
 
