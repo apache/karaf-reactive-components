@@ -14,21 +14,19 @@ import component.api.MComponent;
 import reactor.core.publisher.Flux;
 
 @Component(immediate=true)
-public class ExampleComponent2 {
-    Logger LOG = LoggerFactory.getLogger(ExampleComponent2.class);
+public class ExampleEventAdmin {
+    Logger LOG = LoggerFactory.getLogger(ExampleEventAdmin.class);
     
     @Reference(target="(name=eventAdmin)")
-    MComponent<Map<String, ? >> mqtt;
+    MComponent<Map<String, ? >> eventAdmin;
 
     @Activate
     public void start() throws Exception {
-        LOG.info("Starting component2");
-        Publisher<Map<String, ?>> fromTopic = mqtt.from("input", Map2Map::convert);
-        Consumer<Map<String, ?>> toTopic = mqtt.to("output", Map2Map::convert);
+        Publisher<Map<String, ?>> fromTopic = eventAdmin.from("input", Map2Map::convert);
+        Consumer<Map<String, ?>> toTopic = eventAdmin.to("output", Map2Map::convert);
         Flux.from(fromTopic)
             .log()
-            .subscribe();
-        LOG.info("component2 started");
+            .subscribe(toTopic);
     }
 
 }
