@@ -14,7 +14,7 @@ import org.reactivestreams.Publisher;
 import component.api.MComponent;
 
 @Component(property="name=mqtt")
-public class MqttComponent implements MComponent {
+public class MqttComponent implements MComponent<byte[]> {
     
     MqttClient client;
 

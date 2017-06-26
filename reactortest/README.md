@@ -19,6 +19,7 @@ You also need a MQTT client.
 ## Install
 
 ```
+feature:install scr
 config:property-set -p component.mqtt.MqttComponent serverUrl tcp://localhost:1883
 install -s mvn:org.eclipse.paho/org.eclipse.paho.client.mqttv3/1.1.1
 install -s mvn:org.reactivestreams/reactive-streams/1.0.0

@@ -11,40 +11,36 @@ import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
-public class MqttSource <T> implements IMqttMessageListener, Publisher<T> {
-
-    private Subscriber<? super T> subscriber;
+public class MqttSource <T> implements Publisher<T> {
     private Function<byte[], T> converter;
     private MqttClient client;
     private String topic;
-    private AtomicBoolean subScribed;
     
     public MqttSource(MqttClient client, String topic, Function<byte[], T> converter) {
         this.client = client;
         this.topic = topic;
         this.converter = converter;
-        this.subScribed = new AtomicBoolean(false);
     }
     
     @Override
     public void subscribe(Subscriber<? super T> subscriber) {
-        this.subscriber = subscriber;
-        subscriber.onSubscribe(new MqttSubscription());
+        subscriber.onSubscribe(new MqttSubscription(subscriber));
     }
 
-    @Override
-    public void messageArrived(String topic, MqttMessage message) throws Exception {
-        T payLoad = converter.apply(message.getPayload()); 
-        this.subscriber.onNext(payLoad);
-    }
-
-    public class MqttSubscription implements Subscription {
+    public class MqttSubscription implements IMqttMessageListener, Subscription {
+        private AtomicBoolean subScribed;
+        private Subscriber<? super T> subscriber;
+        
+        public MqttSubscription(Subscriber<? super T> subscriber) {
+            this.subscriber = subscriber;
+            this.subScribed = new AtomicBoolean(false);
+        }
 
         @Override
         public void request(long n) {
             try {
                 if (subScribed.compareAndSet(false, true)) {
-                    client.subscribe(topic, MqttSource.this);
+                    client.subscribe(topic, this);
                 }
             } catch (MqttException e) {
                 subscriber.onError(e);
@@ -60,6 +56,12 @@ public class MqttSource <T> implements IMqttMessageListener, Publisher<T> {
             } catch (MqttException e) {
                 subscriber.onError(e);
             }
+        }
+        
+        @Override
+        public void messageArrived(String topic, MqttMessage message) throws Exception {
+            T payLoad = converter.apply(message.getPayload()); 
+            this.subscriber.onNext(payLoad);
         }
 
     }

@@ -18,7 +18,7 @@ public class MqttExampleComponent {
     Logger LOG = LoggerFactory.getLogger(MqttExampleComponent.class);
     
     @Reference(target="(name=mqtt)")
-    MComponent mqtt;
+    MComponent<byte[]> mqtt;
 
     @Activate
     public void start() throws Exception {
