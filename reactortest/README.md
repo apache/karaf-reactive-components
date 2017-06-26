@@ -1,4 +1,4 @@
-# Prototype of a combination of messaging and reactive streams
+# Prototype of messaging components and reactive streams
 
 ## Example for combining reactor and mqtt
 
