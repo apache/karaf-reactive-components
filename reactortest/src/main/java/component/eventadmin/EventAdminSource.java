@@ -70,6 +70,7 @@ public class EventAdminSource <T> implements Publisher<T> {
 
         Map<String, ?> toMap(Event event) {
             Map<String, Object> props = new HashMap<>();
+            props.put("topic", event.getTopic());
             for (String key : event.getPropertyNames()) {
                 props.put(key, event.getProperty(key));
             }
