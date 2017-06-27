@@ -2,7 +2,6 @@ package component.mail;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -10,9 +9,8 @@ import javax.mail.internet.MimeMessage;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.reactivestreams.Subscriber;
 
-import component.mail.MailComponent;
-import component.mail.SessionComponent;
 import reactor.core.publisher.Flux;
 
 public class TestMail {
@@ -27,7 +25,7 @@ public class TestMail {
         MailComponent mail = new MailComponent();
         mail.session = session;
 
-        Consumer<String> to = mail.to("cschneider@localhost", txt -> createMessage(session, txt));
+        Subscriber<String> to = mail.to("cschneider@localhost", txt -> createMessage(session, txt));
         Flux.just("Test").subscribe(to);
     }
 

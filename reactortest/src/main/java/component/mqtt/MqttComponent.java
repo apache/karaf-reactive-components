@@ -1,6 +1,5 @@
 package component.mqtt;
 
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -10,6 +9,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscriber;
 
 import component.api.MComponent;
 
@@ -42,7 +42,7 @@ public class MqttComponent implements MComponent<byte[]> {
     }  
     
     @Override
-    public <T> Consumer<T> to(String topic, Function<T, byte[]> converter) throws Exception {
+    public <T> Subscriber<T> to(String topic, Function<T, byte[]> converter) throws Exception {
         return new MqttDestination<T>(client, topic, converter);
     }
 

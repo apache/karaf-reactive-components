@@ -1,6 +1,5 @@
 package component.mail;
 
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 import javax.mail.MethodNotSupportedException;
@@ -10,6 +9,7 @@ import javax.mail.internet.MimeMessage;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscriber;
 
 import component.api.MComponent;
 
@@ -25,7 +25,7 @@ public class MailComponent implements MComponent<MimeMessage> {
     }  
     
     @Override
-    public <T> Consumer<T> to(String destination, Function<T, MimeMessage> converter) throws Exception {
+    public <T> Subscriber<T> to(String destination, Function<T, MimeMessage> converter) throws Exception {
         return new MailDestination<T>(destination, converter);
     }
 

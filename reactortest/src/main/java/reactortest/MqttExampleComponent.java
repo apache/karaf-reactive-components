@@ -1,11 +1,10 @@
 package reactortest;
 
-import java.util.function.Consumer;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscriber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +23,7 @@ public class MqttExampleComponent {
     public void start() throws Exception {
         LOG.info("Starting mqtt test component");
         Publisher<Integer> fromTopic = mqtt.from("input", ByteArrayConverter::asInteger);
-        Consumer<Double> toTopic = mqtt.to("output", DoubleConverter::asByteAr);
+        Subscriber<Double> toTopic = mqtt.to("output", DoubleConverter::asByteAr);
         Flux.from(fromTopic)
             .log()
             .window(2, 1)

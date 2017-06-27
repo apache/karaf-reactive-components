@@ -1,7 +1,6 @@
 package component.eventadmin;
 
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -12,6 +11,7 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.event.EventAdmin;
 import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscriber;
 
 import component.api.MComponent;
 
@@ -39,7 +39,7 @@ public class EventAdminComponent implements MComponent<Map<String, ?>> {
     }  
     
     @Override
-    public <T> Consumer<T> to(String topic, Function<T, Map<String, ?>> converter) throws Exception {
+    public <T> Subscriber<T> to(String topic, Function<T, Map<String, ?>> converter) throws Exception {
         return new EventAdminDestination<T>(client, topic, converter);
     }
 

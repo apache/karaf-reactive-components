@@ -3,7 +3,8 @@ package component.mqtt;
 import static java.time.Duration.of;
 
 import java.time.temporal.ChronoUnit;
-import java.util.function.Consumer;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -11,6 +12,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.junit.Assert;
 import org.junit.Test;
 import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscriber;
 
 import reactor.core.publisher.Flux;
 import reactor.math.MathFlux;
@@ -41,12 +43,13 @@ public class Test1 {
 
     @Test
     public void testMQtt() throws Exception {
+        CountDownLatch latch = new CountDownLatch(1);
         MqttClient client = new MqttClient("tcp://192.168.0.126:1883", MqttClient.generateClientId());
         client.connect();
         MqttComponent mqtt = new MqttComponent();
         mqtt.client = client;
         Publisher<Integer> fromTopic = mqtt.from("input", ByteArrayConverter::asInteger);
-        Consumer<Double> toTopic = mqtt.to("output", DoubleConverter::asByteAr);
+        Subscriber<Double> toTopic = mqtt.to("output", DoubleConverter::asByteAr);
         Flux.from(fromTopic)
             .log()
             .window(2, 1)
@@ -56,10 +59,11 @@ public class Test1 {
         
         client.subscribe("output", (topic, message) -> {
             result = ByteArrayConverter.asDouble(message.getPayload());
+            latch.countDown();
         });
         client.publish("input", new MqttMessage(ByteArrayConverter.fromInteger(2)));
         client.publish("input", new MqttMessage(new Integer(2).toString().getBytes()));
-        Thread.sleep(100);
+        latch.await(10, TimeUnit.SECONDS);
         Assert.assertEquals(2, result, 0.1);
         client.disconnect();
         client.close();

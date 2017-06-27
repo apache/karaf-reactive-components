@@ -1,12 +1,12 @@
 package reactortest;
 
 import java.util.Map;
-import java.util.function.Consumer;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscriber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +23,7 @@ public class ExampleEventAdmin {
     @Activate
     public void start() throws Exception {
         Publisher<Map<String, ?>> fromTopic = eventAdmin.from("input", Map2Map::convert);
-        Consumer<Map<String, ?>> toTopic = eventAdmin.to("output", Map2Map::convert);
+        Subscriber<Map<String, ?>> toTopic = eventAdmin.to("output", Map2Map::convert);
         Flux.from(fromTopic)
             .log()
             .subscribe(toTopic);
