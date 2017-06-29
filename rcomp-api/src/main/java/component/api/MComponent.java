@@ -4,6 +4,6 @@ import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 
 public interface MComponent {
-    <S> Publisher<S> from(String destination, Class<? extends S> type);
-    <S> Subscriber<S> to(String destination, Class<? extends S> type);
+    <T> Publisher<T> from(String destination, Class<? extends T> type);
+    <T> Subscriber<T> to(String destination, Class<? extends T> type);
 }
