@@ -1,7 +1,5 @@
 package component.eventadmin;
 
-import java.util.Map;
-
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -14,7 +12,7 @@ import org.reactivestreams.Subscriber;
 import component.api.MComponent;
 
 @Component(property="name=eventAdmin")
-public class EventAdminComponent implements MComponent<Map<String, ?>> {
+public class EventAdminComponent implements MComponent {
     
     private BundleContext context;
 
@@ -32,13 +30,13 @@ public class EventAdminComponent implements MComponent<Map<String, ?>> {
     }
 
     @Override
-    public Publisher<Map<String, ?>> from(String topic) {
-        return new EventAdminSource(context, topic);
+    public <T> Publisher<T> from(String topic, Class<? extends T> type) {
+        return new EventAdminSource<T>(context, topic, type);
     }  
     
     @Override
-    public Subscriber<Map<String, ?>> to(String topic) {
-        return new EventAdminDestination(client, topic);
+    public <T> Subscriber<T> to(String topic, Class<? extends T> type) {
+        return new EventAdminDestination<T>(client, topic, type);
     }
 
 }

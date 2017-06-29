@@ -7,6 +7,9 @@
     <packaging>pom</packaging>
 
     <properties>
+    	<reactor.version>3.0.7.RELEASE</reactor.version>
+    	<jetty.version>8.1.15.v20140411</jetty.version>
+    	<cxf.version>3.2.0-SNAPSHOT</cxf.version>
     </properties>
 
     <modules>

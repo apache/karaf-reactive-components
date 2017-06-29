@@ -10,25 +10,28 @@ import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
-public class MqttSource implements Publisher<byte[]> {
+public class MqttSource<T> implements Publisher<T> {
     private MqttClient client;
     private String topic;
     
-    public MqttSource(MqttClient client, String topic) {
+    public MqttSource(MqttClient client, String topic, Class<? extends T> type) {
         this.client = client;
         this.topic = topic;
+        if (! type.equals(byte[].class)) {
+            throw new IllegalArgumentException("Curently only byte[] is supported");
+        }
     }
     
     @Override
-    public void subscribe(Subscriber<? super byte[]> subscriber) {
+    public void subscribe(Subscriber<? super T> subscriber) {
         subscriber.onSubscribe(new MqttSubscription(subscriber));
     }
 
     public class MqttSubscription implements IMqttMessageListener, Subscription {
         private AtomicBoolean subScribed;
-        private Subscriber<? super byte[]> subscriber;
+        private Subscriber<? super T> subscriber;
         
-        public MqttSubscription(Subscriber<? super byte[]> subscriber) {
+        public MqttSubscription(Subscriber<? super T> subscriber) {
             this.subscriber = subscriber;
             this.subScribed = new AtomicBoolean(false);
         }
@@ -57,7 +60,17 @@ public class MqttSource implements Publisher<byte[]> {
         
         @Override
         public void messageArrived(String topic, MqttMessage message) throws Exception {
-            this.subscriber.onNext(message.getPayload());
+            this.subscriber.onNext(converTo(message.getPayload()));
+        }
+
+        /**
+         * Simple conversion that just supports byte[]
+         * @param payload
+         * @return
+         */
+        @SuppressWarnings("unchecked")
+        private T converTo(byte[] payload) {
+            return (T) payload; 
         }
 
     }

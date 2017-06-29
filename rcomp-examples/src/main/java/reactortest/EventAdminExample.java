@@ -18,12 +18,12 @@ public class EventAdminExample {
     Logger LOG = LoggerFactory.getLogger(EventAdminExample.class);
     
     @Reference(target="(name=eventAdmin)")
-    MComponent<Map<String, ? >> eventAdmin;
+    MComponent eventAdmin;
 
     @Activate
     public void start() throws Exception {
-        Publisher<Map<String, ?>> fromTopic = eventAdmin.from("input");
-        Subscriber<Map<String, ?>> toTopic = eventAdmin.to("output");
+        Publisher<Map<String, ?>> fromTopic = eventAdmin.from("input", Map.class);
+        Subscriber<Map<String, ?>> toTopic = eventAdmin.to("output", Map.class);
         Flux.from(fromTopic)
             .log()
             .subscribe(toTopic);

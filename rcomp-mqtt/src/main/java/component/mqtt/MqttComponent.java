@@ -12,7 +12,7 @@ import org.reactivestreams.Subscriber;
 import component.api.MComponent;
 
 @Component(property="name=mqtt")
-public class MqttComponent implements MComponent<byte[]> {
+public class MqttComponent implements MComponent {
     
     MqttClient client;
 
@@ -35,13 +35,13 @@ public class MqttComponent implements MComponent<byte[]> {
     }
 
     @Override
-    public Publisher<byte[]> from(String topic) {
-        return new MqttSource(client, topic);
+    public <T> Publisher<T> from(String topic, Class<? extends T> type) {
+        return new MqttSource<T>(client, topic, type);
     }  
     
     @Override
-    public Subscriber<byte[]> to(String topic) {
-        return new MqttDestination(client, topic);
+    public <T> Subscriber<T> to(String topic, Class<? extends T> type) {
+        return new MqttDestination<T>(client, topic, type);
     }
 
 }

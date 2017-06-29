@@ -23,8 +23,8 @@ public class Test1 {
         client.connect();
         MqttComponent mqtt = new MqttComponent();
         mqtt.client = client;
-        Publisher<byte[]> fromTopic = mqtt.from("input");
-        Subscriber<byte[]> toTopic = mqtt.to("output");
+        Publisher<byte[]> fromTopic = mqtt.from("input", byte[].class);
+        Subscriber<byte[]> toTopic = mqtt.to("output", byte[].class);
         Flux.from(fromTopic)
             .log()
             .subscribe(toTopic);

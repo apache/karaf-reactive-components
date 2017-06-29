@@ -25,7 +25,7 @@ public class TestMail {
         MailComponent mail = new MailComponent();
         mail.session = session;
 
-        Subscriber<MimeMessage> to = mail.to("cschneider@localhost");
+        Subscriber<MimeMessage> to = mail.to("cschneider@localhost", MimeMessage.class);
         Flux.just("Test").map(txt -> createMessage(session, txt)).subscribe(to);
     }
 

@@ -7,15 +7,18 @@ import org.osgi.service.event.EventAdmin;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
-public class EventAdminDestination implements Subscriber<Map<String, ?>> {
+public class EventAdminDestination<T> implements Subscriber<T> {
     
     private EventAdmin client;
     private String topic;
     private Subscription subscription;
 
-    public EventAdminDestination(EventAdmin client, String topic) {
+    public EventAdminDestination(EventAdmin client, String topic, Class<? extends T> type) {
         this.client = client;
         this.topic = topic;
+        if (! type.equals(Map.class)) {
+            throw new IllegalArgumentException("Curently only Map<String, ?> is supported");
+        }
     }
 
     @Override
@@ -25,15 +28,20 @@ public class EventAdminDestination implements Subscriber<Map<String, ?>> {
     }
 
     @Override
-    public void onNext(Map<String, ?> payload) {
+    public void onNext(T payload) {
         try {
-            Event event = new Event(topic, payload);
+            Event event = new Event(topic, convertTo(payload));
             this.client.sendEvent(event);
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             subscription.request(1);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<String, ?> convertTo(T payload) {
+        return (Map<String, ?>) payload;
     }
 
     @Override

@@ -17,13 +17,13 @@ public class MqttExample {
     Logger LOG = LoggerFactory.getLogger(MqttExample.class);
     
     @Reference(target="(name=mqtt)")
-    MComponent<byte[]> mqtt;
+    MComponent mqtt;
 
     @Activate
     public void start() throws Exception {
         LOG.info("Starting mqtt test component");
-        Publisher<byte[]> fromTopic = mqtt.from("input");
-        Subscriber<byte[]> toTopic = mqtt.to("output");
+        Publisher<byte[]> fromTopic = mqtt.from("input", byte[].class);
+        Subscriber<byte[]> toTopic = mqtt.to("output", byte[].class);
         Flux.from(fromTopic)
             .map(ByteArrayConverter::asInteger)
             .log()

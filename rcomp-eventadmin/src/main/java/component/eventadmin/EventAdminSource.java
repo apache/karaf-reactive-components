@@ -15,26 +15,29 @@ import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
-public class EventAdminSource implements Publisher<Map<String, ?>> {
+public class EventAdminSource<T> implements Publisher<T> {
     private BundleContext context;
     private String topic;
     
-    public EventAdminSource(BundleContext context, String topic) {
+    public EventAdminSource(BundleContext context, String topic, Class<? extends T> type) {
         this.context = context;
         this.topic = topic;
+        if (! type.equals(Map.class)) {
+            throw new IllegalArgumentException("Curently only Map<String, ?> is supported");
+        }
     }
     
     @Override
-    public void subscribe(Subscriber<? super Map<String, ?>> subscriber) {
+    public void subscribe(Subscriber<? super T> subscriber) {
         subscriber.onSubscribe(new EventAdminSubscription(subscriber));
     }
 
     public class EventAdminSubscription implements Subscription, EventHandler {
         private AtomicBoolean subScribed;
         private ServiceRegistration<EventHandler> sreg;
-        private Subscriber<? super Map<String, ?>> subscriber;
+        private Subscriber<? super T> subscriber;
         
-        public EventAdminSubscription(Subscriber<? super Map<String, ?>> subscriber) {
+        public EventAdminSubscription(Subscriber<? super T> subscriber) {
             this.subscriber = subscriber;
             this.subScribed = new AtomicBoolean(false);
         }
@@ -61,7 +64,12 @@ public class EventAdminSource implements Publisher<Map<String, ?>> {
         
         @Override
         public void handleEvent(Event event) {
-            this.subscriber.onNext(toMap(event));
+            this.subscriber.onNext(convertTo(toMap(event)));
+        }
+
+        @SuppressWarnings("unchecked")
+        private T convertTo(Map<String, ?> map) {
+            return (T) map;
         }
 
         Map<String, ?> toMap(Event event) {
