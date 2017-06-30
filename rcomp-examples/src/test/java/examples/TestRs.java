@@ -1,11 +1,6 @@
 package examples;
 
-import static reactor.core.publisher.Mono.fromCompletionStage;
-
 import java.io.IOException;
-import java.time.Duration;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -21,8 +16,6 @@ import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.junit.Test;
 
-import reactor.core.publisher.Mono;
-
 public class TestRs {
 
     @Test
@@ -31,6 +24,7 @@ public class TestRs {
         server.start();
         WebTarget client1 = ClientBuilder.newClient().target("http://localhost:8384/Hello");
         WebTarget client2 = ClientBuilder.newClient().target("http://localhost:8384/World");
+        /*
         Mono<String> get1 = fromCompletionStage(client1.request().rx().get(String.class));
         Mono<String> get2 = fromCompletionStage(client2.request().rx().get(String.class));
         List<String> result = Mono
@@ -41,6 +35,7 @@ public class TestRs {
             .block(Duration.ofMillis(1500));
         String resultSt = result.stream().collect(Collectors.joining(" "));
         org.junit.Assert.assertEquals("Hello World", resultSt);
+        */
         server.stop();
     }
 
