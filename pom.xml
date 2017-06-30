@@ -21,6 +21,16 @@
 		<module>rcomp-index</module>
 	</modules>
 
+	<pluginRepositories>
+		<pluginRepository>
+			<id>bnd-3.4.0-rc1</id>
+			<url>https://bndtools.ci.cloudbees.com/job/bnd.next/599/artifact/dist/bundles/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.reactivestreams</groupId>
@@ -110,7 +120,7 @@
 			<plugin>
 				<groupId>biz.aQute.bnd</groupId>
 				<artifactId>bnd-maven-plugin</artifactId>
-				<version>3.3.0</version>
+				<version>3.4.0-SNAPSHOT</version>
 				<executions>
 					<execution>
 						<goals>

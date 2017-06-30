@@ -27,4 +27,5 @@ target
 .project
 paho*
 generated
+cnf
 
