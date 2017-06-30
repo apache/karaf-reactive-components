@@ -30,12 +30,12 @@ public class EventAdminComponent implements MComponent {
     }
 
     @Override
-    public <T> Publisher<T> from(String topic, Class<? extends T> type) {
+    public <T> Publisher<T> from(String topic, Class<T> type) {
         return new EventAdminSource<T>(context, topic, type);
     }  
     
     @Override
-    public <T> Subscriber<T> to(String topic, Class<? extends T> type) {
+    public <T> Subscriber<T> to(String topic, Class<T> type) {
         return new EventAdminDestination<T>(client, topic, type);
     }
 

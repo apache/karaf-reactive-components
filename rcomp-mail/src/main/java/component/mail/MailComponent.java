@@ -16,12 +16,12 @@ public class MailComponent implements MComponent {
     Session session;
 
     @Override
-    public <T> Publisher<T> from(String topic, Class<? extends T> type) {
+    public <T> Publisher<T> from(String topic, Class<T> type) {
         throw new RuntimeException();
     }  
     
     @Override
-    public <T> Subscriber<T> to(String destination, Class<? extends T> type) {
+    public <T> Subscriber<T> to(String destination, Class<T> type) {
         return new MailDestination<T>(destination, type);
     }
 

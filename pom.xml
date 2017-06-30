@@ -10,6 +10,7 @@
 		<reactor.version>3.0.7.RELEASE</reactor.version>
 		<jetty.version>8.1.15.v20140411</jetty.version>
 		<cxf.version>3.1.2</cxf.version>
+		<bnd.version>3.4.0-SNAPSHOT</bnd.version>
 	</properties>
 
 	<modules>
@@ -23,8 +24,8 @@
 
 	<pluginRepositories>
 		<pluginRepository>
-			<id>bnd-3.4.0-rc1</id>
-			<url>https://bndtools.ci.cloudbees.com/job/bnd.next/599/artifact/dist/bundles/</url>
+			<id>bnd-3.4.0-rc2</id>
+			<url>https://bndtools.ci.cloudbees.com/job/bnd.next/600/artifact/dist/bundles/</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
@@ -92,7 +93,7 @@
 				<plugin>
 					<groupId>biz.aQute.bnd</groupId>
 					<artifactId>bnd-export-maven-plugin</artifactId>
-					<version>3.4.0-SNAPSHOT</version>
+					<version>${bnd.version}</version>
 					<configuration>
 						<resolve>true</resolve>
 						<failOnChanges>false</failOnChanges>
@@ -120,7 +121,7 @@
 			<plugin>
 				<groupId>biz.aQute.bnd</groupId>
 				<artifactId>bnd-maven-plugin</artifactId>
-				<version>3.4.0-SNAPSHOT</version>
+				<version>${bnd.version}</version>
 				<executions>
 					<execution>
 						<goals>

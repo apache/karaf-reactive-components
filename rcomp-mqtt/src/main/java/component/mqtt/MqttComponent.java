@@ -35,12 +35,12 @@ public class MqttComponent implements MComponent {
     }
 
     @Override
-    public <T> Publisher<T> from(String topic, Class<? extends T> type) {
+    public <T> Publisher<T> from(String topic, Class<T> type) {
         return new MqttSource<T>(client, topic, type);
     }  
     
     @Override
-    public <T> Subscriber<T> to(String topic, Class<? extends T> type) {
+    public <T> Subscriber<T> to(String topic, Class<T> type) {
         return new MqttDestination<T>(client, topic, type);
     }
 

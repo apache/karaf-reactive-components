@@ -13,7 +13,7 @@ public class EventAdminDestination<T> implements Subscriber<T> {
     private String topic;
     private Subscription subscription;
 
-    public EventAdminDestination(EventAdmin client, String topic, Class<? extends T> type) {
+    public EventAdminDestination(EventAdmin client, String topic, Class<T> type) {
         this.client = client;
         this.topic = topic;
         if (! type.equals(Map.class)) {

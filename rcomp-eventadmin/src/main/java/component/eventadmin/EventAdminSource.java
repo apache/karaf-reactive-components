@@ -19,7 +19,7 @@ public class EventAdminSource<T> implements Publisher<T> {
     private BundleContext context;
     private String topic;
     
-    public EventAdminSource(BundleContext context, String topic, Class<? extends T> type) {
+    public EventAdminSource(BundleContext context, String topic, Class<T> type) {
         this.context = context;
         this.topic = topic;
         if (! type.equals(Map.class)) {

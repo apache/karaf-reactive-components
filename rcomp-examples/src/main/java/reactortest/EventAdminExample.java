@@ -22,8 +22,8 @@ public class EventAdminExample {
 
     @Activate
     public void start() throws Exception {
-        Publisher<Map<String, ?>> fromTopic = eventAdmin.from("input", Map.class);
-        Subscriber<Map<String, ?>> toTopic = eventAdmin.to("output", Map.class);
+        Publisher<Map> fromTopic = eventAdmin.from("input", Map.class);
+        Subscriber<Map> toTopic = eventAdmin.to("output", Map.class);
         Flux.from(fromTopic)
             .log()
             .subscribe(toTopic);
