@@ -19,7 +19,7 @@
 		<module>rcomp-mqtt</module>
 		<module>rcomp-mail</module>
 		<module>rcomp-examples</module>
-		<module>rcomp-index</module>
+		<module>rcomp-app</module>
 	</modules>
 
 	<pluginRepositories>
@@ -121,7 +121,7 @@
 			<plugin>
 				<groupId>biz.aQute.bnd</groupId>
 				<artifactId>bnd-maven-plugin</artifactId>
-				<version>${bnd.version}</version>
+				<version>3.3.0</version>
 				<executions>
 					<execution>
 						<goals>
