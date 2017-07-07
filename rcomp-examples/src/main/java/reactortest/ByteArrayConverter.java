@@ -23,5 +23,9 @@ public class ByteArrayConverter {
         return fromString(in.toString());
     }
     
+    public static byte[] fromLong(Long in) {
+        return fromString(in.toString());
+    }
+    
     
 }

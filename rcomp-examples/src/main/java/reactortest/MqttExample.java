@@ -21,7 +21,7 @@ public class MqttExample {
 
     @Activate
     public void start() throws Exception {
-        LOG.info("Starting mqtt test component");
+        LOG.info("Starting mqtt test component2");
         Publisher<byte[]> fromTopic = mqtt.from("input", byte[].class);
         Subscriber<byte[]> toTopic = mqtt.to("output", byte[].class);
         Flux.from(fromTopic)

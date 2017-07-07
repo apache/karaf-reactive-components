@@ -1,7 +1,11 @@
 package component.mqtt;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -15,6 +19,7 @@ import component.api.MComponent;
 public class MqttComponent implements MComponent {
     
     MqttClient client;
+    private Set<MqttDestination<?>> destinations = new HashSet<>();
 
     @ObjectClassDefinition(name = "MQTT config")
     @interface MqttConfig {
@@ -24,12 +29,19 @@ public class MqttComponent implements MComponent {
     
     @Activate
     public void activate(MqttConfig config) throws MqttException {
-        client = new MqttClient(config.serverUrl(), MqttClient.generateClientId());
+        client = new MqttClient(config.serverUrl(), MqttClient.generateClientId(),
+                                new MemoryPersistence());
         client.connect();
     }
     
     @Deactivate
     public void deactivate() throws MqttException {
+        for (MqttDestination<?> destination : destinations) {
+            try {
+                destination.close(); 
+            } catch (Exception e) {
+            }
+        }
         client.disconnect();
         client.close();
     }
@@ -41,7 +53,9 @@ public class MqttComponent implements MComponent {
     
     @Override
     public <T> Subscriber<T> to(String topic, Class<T> type) {
-        return new MqttDestination<T>(client, topic, type);
+        MqttDestination<T> destination = new MqttDestination<T>(client, topic, type);
+        destinations.add(destination);
+        return destination;
     }
 
 }

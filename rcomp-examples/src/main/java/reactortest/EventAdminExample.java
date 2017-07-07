@@ -20,6 +20,7 @@ public class EventAdminExample {
     @Reference(target="(name=eventAdmin)")
     MComponent eventAdmin;
 
+    @SuppressWarnings("rawtypes")
     @Activate
     public void start() throws Exception {
         Publisher<Map> fromTopic = eventAdmin.from("input", Map.class);

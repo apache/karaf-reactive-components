@@ -19,7 +19,7 @@ public class Test1 {
     @Test
     public void testMQtt() throws Exception {
         CountDownLatch latch = new CountDownLatch(1);
-        MqttClient client = new MqttClient("tcp://192.168.0.126:1883", MqttClient.generateClientId(), new MemoryPersistence());
+        MqttClient client = new MqttClient("tcp://localhost:1883", MqttClient.generateClientId(), new MemoryPersistence());
         client.connect();
         MqttComponent mqtt = new MqttComponent();
         mqtt.client = client;

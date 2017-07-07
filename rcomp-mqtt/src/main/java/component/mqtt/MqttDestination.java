@@ -5,7 +5,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
-public class MqttDestination<T> implements Subscriber<T> {
+public class MqttDestination<T> implements Subscriber<T>, AutoCloseable {
     
     private MqttClient client;
     private String topic;
@@ -51,4 +51,11 @@ public class MqttDestination<T> implements Subscriber<T> {
         System.out.println("oncomplete");
     }
 
+    @Override
+    public void close() throws Exception {
+        if (subscription != null) {
+            subscription.cancel();
+            subscription = null;
+        }
+    }
 }
