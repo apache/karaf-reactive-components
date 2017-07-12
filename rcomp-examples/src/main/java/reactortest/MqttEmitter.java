@@ -10,15 +10,15 @@ import org.reactivestreams.Subscriber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import component.api.MComponent;
+import component.api.RComponent;
 import reactor.core.publisher.Flux;
 
 @Component(immediate=true)
 public class MqttEmitter {
     Logger LOG = LoggerFactory.getLogger(MqttEmitter.class);
     
-    @Reference(target="(name=mqtt)")
-    MComponent mqtt;
+    @Reference(target="(name=mqtt2)")
+    RComponent mqtt;
 
     @Activate
     public void start() throws Exception {

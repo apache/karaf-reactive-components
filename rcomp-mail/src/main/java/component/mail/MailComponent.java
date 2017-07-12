@@ -7,10 +7,10 @@ import org.osgi.service.component.annotations.Reference;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 
-import component.api.MComponent;
+import component.api.RComponent;
 
 @Component(property="name=mail")
-public class MailComponent implements MComponent {
+public class MailComponent implements RComponent {
     
     @Reference
     Session session;

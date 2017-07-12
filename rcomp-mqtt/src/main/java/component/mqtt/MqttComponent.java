@@ -13,10 +13,10 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 
-import component.api.MComponent;
+import component.api.RComponent;
 
 @Component(property="name=mqtt")
-public class MqttComponent implements MComponent {
+public class MqttComponent implements RComponent {
     
     MqttClient client;
     private Set<MqttDestination<?>> destinations = new HashSet<>();

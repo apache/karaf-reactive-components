@@ -8,7 +8,7 @@ import org.reactivestreams.Subscriber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import component.api.MComponent;
+import component.api.RComponent;
 import reactor.core.publisher.Flux;
 import reactor.math.MathFlux;
 
@@ -17,7 +17,7 @@ public class MqttExample {
     Logger LOG = LoggerFactory.getLogger(MqttExample.class);
     
     @Reference(target="(name=mqtt)")
-    MComponent mqtt;
+    RComponent mqtt;
 
     @Activate
     public void start() throws Exception {

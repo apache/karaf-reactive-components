@@ -9,10 +9,10 @@ import org.osgi.service.event.EventAdmin;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 
-import component.api.MComponent;
+import component.api.RComponent;
 
 @Component(property="name=eventAdmin")
-public class EventAdminComponent implements MComponent {
+public class EventAdminComponent implements RComponent {
     
     private BundleContext context;
 

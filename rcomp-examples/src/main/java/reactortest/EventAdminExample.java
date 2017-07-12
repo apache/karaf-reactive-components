@@ -10,7 +10,7 @@ import org.reactivestreams.Subscriber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import component.api.MComponent;
+import component.api.RComponent;
 import reactor.core.publisher.Flux;
 
 @Component(immediate=true)
@@ -18,7 +18,7 @@ public class EventAdminExample {
     Logger LOG = LoggerFactory.getLogger(EventAdminExample.class);
     
     @Reference(target="(name=eventAdmin)")
-    MComponent eventAdmin;
+    RComponent eventAdmin;
 
     @SuppressWarnings("rawtypes")
     @Activate
