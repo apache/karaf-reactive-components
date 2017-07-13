@@ -7,15 +7,13 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.event.EventConstants;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 
 import component.api.RComponent;
 
 @Component(immediate = true, 
-    configurationPolicy = ConfigurationPolicy.REQUIRE,
-    property = EventConstants.EVENT_TOPIC //
+    configurationPolicy = ConfigurationPolicy.REQUIRE
 )
 public class KafkaComponent implements RComponent {
     Dictionary<String, Object> rawConfig;
