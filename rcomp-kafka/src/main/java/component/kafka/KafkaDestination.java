@@ -36,14 +36,7 @@ public class KafkaDestination<T> implements Subscriber<T>, AutoCloseable {
     @Override
     public void onNext(T payload) {
         try {
-            ProducerRecord<?, ?> record;
-            if (payload instanceof ProducerRecord<?, ?>) {
-                
-                record = (ProducerRecord<?, ?>)payload;
-            } else {
-                String key = "dummykey";
-                record = new ProducerRecord<>(topic, key, payload);                
-            }
+            ProducerRecord<?, ?> record = getProducerRecord(payload);
             producer.send(record, new Callback() {
                 @Override
                 public void onCompletion(RecordMetadata recordMetadata, Exception e) {
@@ -59,6 +52,18 @@ public class KafkaDestination<T> implements Subscriber<T>, AutoCloseable {
         }
     }
 
+    private ProducerRecord<?, ?> getProducerRecord(T payload) {
+        ProducerRecord<?, ?> record;
+        if (payload instanceof ProducerRecord<?, ?>) {
+            record = (ProducerRecord<?, ?>)payload;
+        } else {
+            // @TODO better way to determine key
+            String key = "dummykey";
+            record = new ProducerRecord<>(topic, key, payload);                
+        }
+        return record;
+    }
+
     @Override
     public void onError(Throwable t) {
         System.out.println("onerr");
@@ -66,7 +71,7 @@ public class KafkaDestination<T> implements Subscriber<T>, AutoCloseable {
 
     @Override
     public void onComplete() {
-        System.out.println("oncomplete");
+        this.producer.close();
     }
 
     @Override
@@ -75,5 +80,6 @@ public class KafkaDestination<T> implements Subscriber<T>, AutoCloseable {
             subscription.cancel();
             subscription = null;
         }
+        this.producer.close();
     }
 }

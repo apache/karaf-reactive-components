@@ -9,6 +9,8 @@ This example show how to combine reactor with an protocols in a loosely coupled 
 
 ## Build
 
+Start local kafka server and mqtt server with defaults for tests to work.
+
 ```
 mvn clean install
 ```

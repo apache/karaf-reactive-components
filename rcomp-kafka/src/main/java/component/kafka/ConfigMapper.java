@@ -32,12 +32,6 @@ public class ConfigMapper {
     private void mapCommon() {
         process("bootstrap.servers", "localhost:9092");
         process("client.id", "");
-        process("compression.type", "none");
-        process("acks", "all");
-        process("retries", "0");
-        process("batch.size", "16384");
-        process("buffer.memory", "33554432");
-        process("max.request.size", "2097152");
         process("security.protocol");
         process("ssl.truststore.location");
         process("ssl.truststore.password");
@@ -52,6 +46,12 @@ public class ConfigMapper {
     }
     
     private void mapProducer() {
+        process("acks", "all");
+        process("compression.type", "none");
+        process("max.request.size", "2097152");
+        process("retries", "0");
+        process("batch.size", "16384");
+        process("buffer.memory", "33554432");
         config.put("key.serializer", StringSerializer.class);
         config.put("value.serializer", StringSerializer.class);
         process("request.timeout.ms", "15000");

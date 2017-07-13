@@ -2,7 +2,10 @@ package component.kafka;
 
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -15,53 +18,90 @@ import org.reactivestreams.Subscription;
 public class KafkaSource<T> implements Publisher<T> {
     private KafkaConsumer consumer;
     private String topic;
-    
+    private Class<? extends T> type;
+
     public KafkaSource(Properties config, String topic, Class<? extends T> type) {
         this.consumer = new KafkaConsumer(config);
         this.topic = topic;
-        if (!((type.equals(byte[].class) || type.equals(ConsumerRecord.class)))) {
+        if (!(type == String.class || type == ConsumerRecord.class)) {
             throw new IllegalArgumentException("Curently only byte[] and ProducerRecord are supported");
         }
-    }
-    
-    @Override
-    public void subscribe(Subscriber<? super T> subscriber) {
-        subscriber.onSubscribe(new MqttSubscription(subscriber));
+        this.type = type;
     }
 
-    public class MqttSubscription implements Subscription {
-        private AtomicBoolean subScribed;
+    @Override
+    public void subscribe(Subscriber<? super T> subscriber) {
+        subscriber.onSubscribe(new KafkaSubscription(subscriber));
+    }
+
+    public class KafkaSubscription implements Subscription {
         private Subscriber<? super T> subscriber;
-        
-        public MqttSubscription(Subscriber<? super T> subscriber) {
+        private AtomicLong sent;
+        private AtomicLong requested;
+        private ExecutorService receiveExecutor;
+        private AtomicBoolean finished;
+
+        public KafkaSubscription(Subscriber<? super T> subscriber) {
             this.subscriber = subscriber;
-            this.subScribed = new AtomicBoolean(false);
+            this.sent = new AtomicLong();
+            this.requested = new AtomicLong();
+            this.receiveExecutor = Executors.newSingleThreadExecutor();
+            this.finished = new AtomicBoolean(false);
+            Runnable receiver = new Runnable() {
+
+                @SuppressWarnings("unchecked")
+                @Override
+                public void run() {
+                    consumer.subscribe(Arrays.asList(topic));
+                    while (!finished.get()) {
+                        try {
+                            if (sent.get() < requested.get())  {
+                                ConsumerRecords<String, T> records = consumer.poll(100);
+                                records.forEach(record -> handleRecord(record));
+                            } else {
+                                synchronized (this) {
+                                    try {
+                                        wait(1000);
+                                    } catch (InterruptedException e) {
+                                        finished.set(true);
+                                    }
+                                }
+                            }
+                        } catch (RuntimeException e) {
+                            subscriber.onError(e);
+                        }
+
+                    }
+                    subscriber.onComplete();
+                    consumer.close();
+                }
+            };
+            this.receiveExecutor.submit(receiver);
+        }
+
+        @Override
+        public void request(long n) {
+            requested.addAndGet(n);
+            synchronized (this) {
+                notify();
+            }
         }
 
         @SuppressWarnings("unchecked")
-        @Override
-        public void request(long n) {
-            try {
-                if (subScribed.compareAndSet(false, true)) {
-                    consumer.subscribe(Arrays.asList(topic));
-                }
-                ConsumerRecords<String, String> records = consumer.poll(1000);
-                records.forEach(record -> {subscriber.onNext((T)record); consumer.commitAsync(); });
-            } catch (RuntimeException e) {
-                subscriber.onError(e);
+        private void handleRecord(ConsumerRecord<String, T> record) {
+            System.out.println("Handling message " + record);
+            if (type == ConsumerRecord.class) {
+                subscriber.onNext((T)record);
+            } else {
+                subscriber.onNext((T)record.value());
             }
+            consumer.commitAsync();
+            sent.incrementAndGet();
         }
 
         @Override
         public void cancel() {
-            try {
-                if (subScribed.compareAndSet(true, false)) {
-                    consumer.unsubscribe();
-                    consumer.close();
-                }
-            } catch (RuntimeException e) {
-                subscriber.onError(e);
-            }
+            finished.set(true);
         }
 
     }
