@@ -25,15 +25,26 @@ You also need a MQTT client.
 ```
 feature:install scr
 config:property-set -p component.mqtt.MqttComponent serverUrl tcp://localhost:1883
-install -s mvn:org.eclipse.paho/org.eclipse.paho.client.mqttv3/1.1.1
+config:property-set -p appender.kafka topic decanter
+
 install -s mvn:org.reactivestreams/reactive-streams/1.0.0
 install -s mvn:io.projectreactor/reactor-core/3.0.7.RELEASE
 install -s wrap:mvn:io.projectreactor.addons/reactor-extra/3.0.7.RELEASE
-install -s mvn:javax.mail/mail/1.5.0-b01
 
 install -s mvn:net.lr.reactive.component/rcomp-api/1.0.0-SNAPSHOT
+
+install -s mvn:org.eclipse.paho/org.eclipse.paho.client.mqttv3/1.1.1
 install -s mvn:net.lr.reactive.component/rcomp-mqtt/1.0.0-SNAPSHOT
+
 install -s mvn:net.lr.reactive.component/rcomp-eventadmin/1.0.0-SNAPSHOT
+
+install -s mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.kafka-clients/0.11.0.0_1
+install -s mvn:net.lr.reactive.component/rcomp-kafka/1.0.0-SNAPSHOT
+install -s mvn:net.lr.reactive.component/kafka-appender/1.0.0-SNAPSHOT
+
+install -s mvn:javax.mail/mail/1.5.0-b01
+install -s mvn:net.lr.reactive.component/rcomp-mail/1.0.0-SNAPSHOT
+
 install -s mvn:net.lr.reactive.component/rcomp-examples/1.0.0-SNAPSHOT
 ```
 

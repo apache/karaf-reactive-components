@@ -12,13 +12,15 @@ public class EventAdminDestination<T> implements Subscriber<T> {
     private EventAdmin client;
     private String topic;
     private Subscription subscription;
+    private Class<T> type;
 
     public EventAdminDestination(EventAdmin client, String topic, Class<T> type) {
         this.client = client;
         this.topic = topic;
-        if (! type.equals(Map.class)) {
-            throw new IllegalArgumentException("Curently only Map<String, ?> is supported");
+        if (!(type == Map.class || type==Event.class)) {
+            throw new IllegalArgumentException("Curently only Map<String, ?> and Event are supported");
         }
+        this.type = type;
     }
 
     @Override
@@ -30,7 +32,7 @@ public class EventAdminDestination<T> implements Subscriber<T> {
     @Override
     public void onNext(T payload) {
         try {
-            Event event = new Event(topic, convertTo(payload));
+            Event event = toEvent(payload);
             this.client.sendEvent(event);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -40,8 +42,12 @@ public class EventAdminDestination<T> implements Subscriber<T> {
     }
 
     @SuppressWarnings("unchecked")
-    private Map<String, ?> convertTo(T payload) {
-        return (Map<String, ?>) payload;
+    private Event toEvent(T payload) {
+        if (type == Event.class) {
+            return (Event)payload;
+        } else {
+            return new Event(topic, (Map<String, ?>)payload);
+        }
     }
 
     @Override

@@ -13,7 +13,8 @@ import org.reactivestreams.Subscriber;
 import component.api.RComponent;
 
 @Component(immediate = true, 
-    configurationPolicy = ConfigurationPolicy.REQUIRE
+    configurationPolicy = ConfigurationPolicy.REQUIRE,
+    property = "name=kafka"
 )
 public class KafkaComponent implements RComponent {
     Dictionary<String, Object> rawConfig;

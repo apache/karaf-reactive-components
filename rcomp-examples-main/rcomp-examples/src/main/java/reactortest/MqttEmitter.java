@@ -17,12 +17,14 @@ import reactor.core.publisher.Flux;
 public class MqttEmitter {
     Logger LOG = LoggerFactory.getLogger(MqttEmitter.class);
     
-    @Reference(target="(name=mqtt2)")
+    @Reference(target="(name=mqtt)")
     RComponent mqtt;
+
+    private Subscriber<byte[]> toTopic;
 
     @Activate
     public void start() throws Exception {
-        Subscriber<byte[]> toTopic = mqtt.to("input", byte[].class);
+        toTopic = mqtt.to("input", byte[].class);
         Flux.interval(Duration.ofSeconds(1))
             .map(ByteArrayConverter::fromLong)
             .subscribe(toTopic);
@@ -32,6 +34,7 @@ public class MqttEmitter {
     @Deactivate
     public void stop() throws Exception {
         LOG.info("mqtt test component stopped");
+        toTopic.onComplete();
     }
 
 }

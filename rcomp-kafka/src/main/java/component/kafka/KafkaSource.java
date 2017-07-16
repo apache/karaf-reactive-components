@@ -24,7 +24,7 @@ public class KafkaSource<T> implements Publisher<T> {
         this.consumer = new KafkaConsumer(config);
         this.topic = topic;
         if (!(type == String.class || type == ConsumerRecord.class)) {
-            throw new IllegalArgumentException("Curently only byte[] and ProducerRecord are supported");
+            throw new IllegalArgumentException("Curently only String and ProducerRecord are supported");
         }
         this.type = type;
     }
