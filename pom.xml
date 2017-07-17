@@ -21,6 +21,7 @@
 		<module>rcomp-kafka</module>
 		<module>rcomp-examples-main</module>
 		<module>rcomp-app</module>
+		<module>rcomp-features</module>
 	</modules>
 
 	<pluginRepositories>

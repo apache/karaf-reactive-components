@@ -69,8 +69,10 @@ public class KafkaAppender {
         String eventTopics = (String)config.get(EventConstants.EVENT_TOPIC);
         Publisher<Event> fromEventAdmin = eventAdmin.from(eventTopics, Event.class);
         toKafka = kafka.to(topic, ProducerRecord.class);
+        org.slf4j.MDC.put("inLogAppender", "true");
         Flux.from(fromEventAdmin)
-            .log()
+            .doOnEach(event -> org.slf4j.MDC.put("inLogAppender", "true"))
+            //.log()
             .map(event->toRecord(event))
             .doOnError(ex -> LOGGER.error(ex.getMessage(), ex))
             .subscribe(toKafka);

@@ -23,43 +23,22 @@ You also need a MQTT client.
 ## Install
 
 ```
-feature:install scr
 config:property-set -p component.mqtt.MqttComponent serverUrl tcp://localhost:1883
-
-install -s mvn:org.reactivestreams/reactive-streams/1.0.0
-install -s mvn:io.projectreactor/reactor-core/3.0.7.RELEASE
-install -s wrap:mvn:io.projectreactor.addons/reactor-extra/3.0.7.RELEASE
-
-install -s mvn:net.lr.reactive.component/rcomp-api/1.0.0-SNAPSHOT
-
-install -s mvn:org.eclipse.paho/org.eclipse.paho.client.mqttv3/1.1.1
-install -s mvn:net.lr.reactive.component/rcomp-mqtt/1.0.0-SNAPSHOT
-
-install -s mvn:net.lr.reactive.component/rcomp-eventadmin/1.0.0-SNAPSHOT
-
-install -s mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.kafka-clients/0.11.0.0_1
-install -s mvn:net.lr.reactive.component/rcomp-kafka/1.0.0-SNAPSHOT
-install -s mvn:net.lr.reactive.component/kafka-appender/1.0.0-SNAPSHOT
-
-install -s mvn:javax.mail/mail/1.5.0-b01
-install -s mvn:net.lr.reactive.component/rcomp-mail/1.0.0-SNAPSHOT
-
-install -s mvn:net.lr.reactive.component/rcomp-examples/1.0.0-SNAPSHOT
+feature:repo-add mvn:net.lr.reactive.component/rcomp-features/1.0.0-SNAPSHOT/xml/features
+feature:install rcomp-examples
 ```
 
 Decanter kafka appender example
 
+This example shows how to leverage reactive components to create an alternative kafka appender for decanter.
+The kafka-appender bundle creates a flux that listens on eventadmin (rcomp-eventadmin) and sends to a kafka server (rcomp-kafka).  
+
+This is a proof of concept that we could base a future decanter version on reactive components.
+
 ```
 config:property-set -p appender.kafka topic decanter
-feature:repo-add decanter 1.3.0
-feature:install decanter-collector-jmx scr 
-install -s mvn:org.reactivestreams/reactive-streams/1.0.0
-install -s mvn:io.projectreactor/reactor-core/3.0.7.RELEASE
-install -s mvn:net.lr.reactive.component/rcomp-api/1.0.0-SNAPSHOT
-install -s mvn:net.lr.reactive.component/rcomp-eventadmin/1.0.0-SNAPSHOT
-install -s mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.kafka-clients/0.11.0.0_1
-install -s mvn:net.lr.reactive.component/rcomp-kafka/1.0.0-SNAPSHOT
-install -s mvn:net.lr.reactive.component/kafka-appender/1.0.0-SNAPSHOT
+feature:repo-add mvn:net.lr.reactive.component/rcomp-features/1.0.0-SNAPSHOT/xml/features
+feature:install decanter-collector-log rcomp-decanter-appender-kafka decanter-collector-jmx
 ```
 
 ## Test
@@ -68,9 +47,9 @@ install -s mvn:net.lr.reactive.component/kafka-appender/1.0.0-SNAPSHOT
 Start mqtt client
 
 Subscribe to topic "output". 
-Send two messages containing the values "1", "2" and "3" to the topic "input".
+You should receive the following on the topic output: "1.5", "2.5", ...
 
-You should receive the following on the topic output: "1.5", "2.5"
+This can also be seen in the karaf log.
 
 # EventAdmin
 
