@@ -11,6 +11,10 @@ Ultimately I am searching for something like Apache Camel Components but with a 
 In camel the big problem is that components depend on camel core which unfortunately is much more than a component API.
 So any camel component is coupled quite tightly to all of camel core.
 
+Currently reactive components is built on top of OSGi to leverage configuration mechanisms as well as finding components as OSGi services.
+Conceptually this is not limited to OSGi though. With a suitable plugin and config mechanism this could easily be used on spring boot or similar too.
+So I am interested in bringing this to other platforms too. 
+
 ## Build
 
 ```
