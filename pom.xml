@@ -19,7 +19,7 @@
 		<module>rcomp-mqtt</module>
 		<module>rcomp-mail</module>
 		<module>rcomp-kafka</module>
-		<module>rcomp-examples-main</module>
+		<module>rcomp-examples</module>
 		<module>rcomp-app</module>
 		<module>rcomp-features</module>
 	</modules>

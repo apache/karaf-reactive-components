@@ -23,8 +23,8 @@ public class EventAdminExample {
     @SuppressWarnings("rawtypes")
     @Activate
     public void start() throws Exception {
-        Publisher<Map> fromTopic = eventAdmin.from("input", Map.class);
-        Subscriber<Map> toTopic = eventAdmin.to("output", Map.class);
+        Publisher<Map> fromTopic = eventAdmin.from("eainput", Map.class);
+        Subscriber<Map> toTopic = eventAdmin.to("eaoutput", Map.class);
         Flux.from(fromTopic)
             .log()
             .subscribe(toTopic);
