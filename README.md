@@ -3,9 +3,13 @@
 ## Scope
 
 I recently experimented with reactive streams and a small component framework.
-See https://github.com/cschneider/streaming-osgi
+The goal is to have a small API that can encapsulate a protocol and transport. 
+The code using a reactive component should not directly depend on the specifics of the transport or protocol.
+Another goal is to have reactive features like backpressure. 
 
-The goal is to have a small API that can encapsulate a protocol and transport. The code using a reactive component should not directly depend on the specifics of the transport or protocol. Another goal is to have reactive features like backpressure. Ultimately I am searching for something like Apache Camel Components but with a lot less coupling. In camel the big problem is that components depend on camel core which unfortunately is much more than a component API. So any camel component is coupled quite tightly to all of camel core.
+Ultimately I am searching for something like Apache Camel Components but with a lot less coupling. 
+In camel the big problem is that components depend on camel core which unfortunately is much more than a component API.
+So any camel component is coupled quite tightly to all of camel core.
 
 ## Build
 
