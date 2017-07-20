@@ -27,7 +27,6 @@ public class EventAdminTest {
 
     @Test
     public void test() {
-        System.out.println("test");
         Map<String, String> properties = new HashMap<>();
         eventAdmin.sendEvent(new Event("eainput", properties));
     }
