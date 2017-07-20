@@ -6,6 +6,10 @@ import org.apache.felix.bundlerepository.Repository;
 import org.apache.felix.bundlerepository.Resource;
 import org.osgi.framework.Version;
 
+/**
+ * Wraps a Repository and allows to get the URI of each resource by
+ * symbolic name and version
+ */
 class BundleUris {
     Map<String, String> bundleUri = new HashMap<>();
 

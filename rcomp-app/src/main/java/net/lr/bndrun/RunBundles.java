@@ -5,14 +5,20 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 class RunBundles {
-    static List<BundleRef> parse(String bundles) {
-        StringTokenizer tokenizer = new StringTokenizer(bundles, "',;[)");
-        List<BundleRef> artifacts = new ArrayList<>();
+    /**
+     * Parses a string of bundle refs in the style of bndtools -runbundles
+     *   
+     * @param bundlesSt comma separated list of bundle refs
+     * @return list of bundle refs
+     */
+    static List<BundleRef> parse(String bundlesSt) {
+        StringTokenizer tokenizer = new StringTokenizer(bundlesSt, "',;[)");
+        List<BundleRef> bundles = new ArrayList<>();
         while (tokenizer.hasMoreTokens()) {
             BundleRef artifact = parseBundleRef(tokenizer);
-            artifacts.add(artifact);
+            bundles.add(artifact);
         }
-        return artifacts;
+        return bundles;
     }
 
     private static BundleRef parseBundleRef(StringTokenizer tokenizer) {

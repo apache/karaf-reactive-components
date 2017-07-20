@@ -16,10 +16,21 @@ import org.ops4j.pax.exam.Option;
 
 import net.lr.bndrun.RunBundles.BundleRef;
 
+/**
+ * Allow to use bndrun files for pax exam tests
+ */
 public class BndRunOption {
     private List<Option> options = new ArrayList<>();
     private Properties props = new Properties();
     
+    /**
+     * Get pax exam composite Option from the contents of a bndrun file 
+     * 
+     * @param bndRunPath
+     * @param repositoryPath
+     * @return
+     * @throws Exception
+     */
     public static Option bndRun(String bndRunPath, String repositoryPath) throws Exception {
         URL repoURL = new File(repositoryPath).toURI().toURL();
         File bndRunFile = new File(bndRunPath);
