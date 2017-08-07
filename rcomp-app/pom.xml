@@ -17,6 +17,7 @@
 		<dependency>
 			<groupId>net.lr.reactive.component</groupId>
 			<artifactId>rcomp-api</artifactId>
+			<version>${rcomp.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.lr.reactive.component</groupId>

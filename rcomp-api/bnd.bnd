@@ -1,1 +1,1 @@
-Export-Package: component.api
+Export-Package: org.apache.karaf.rcomp.api

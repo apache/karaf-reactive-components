@@ -20,6 +20,7 @@ import java.util.Dictionary;
 
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.karaf.decanter.api.marshaller.Marshaller;
+import org.apache.karaf.rcomp.api.RComponent;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -32,7 +33,6 @@ import org.reactivestreams.Subscriber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import component.api.RComponent;
 import reactor.core.publisher.Flux;
 
 @Component(
