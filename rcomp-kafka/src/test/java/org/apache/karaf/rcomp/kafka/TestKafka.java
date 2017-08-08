@@ -25,6 +25,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.karaf.rcomp.kafka.KafkaComponent;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.reactivestreams.Subscriber;
 
@@ -36,6 +37,7 @@ public class TestKafka {
     private static final String TOPIC1 = "topic1";
     private static final String TOPIC2 = "topic2";
 
+    @Ignore
     @Test
     public void testWithConsumerRecord() throws Exception {
         KafkaComponent kafka = createComponent();
@@ -55,6 +57,7 @@ public class TestKafka {
         Assert.assertEquals("test", received.get(0));
     }
 
+    @Ignore
     @Test
     public void testWithString() throws Exception {
         KafkaComponent kafka = createComponent();
