@@ -27,33 +27,33 @@
     <feature name="rcomp-api" version="${project.version}">
         <feature>scr</feature>
         <bundle>mvn:org.reactivestreams/reactive-streams/1.0.0</bundle>
-        <bundle dependency="true">mvn:net.lr.reactive.component/rcomp-api/${project.version}</bundle>
+        <bundle dependency="true">mvn:org.apache.karaf.rcomp/rcomp-api/${project.version}</bundle>
     </feature>
     
     <feature name="rcomp-kafka" version="${project.version}">
         <feature>rcomp-api</feature>
         <bundle dependency="true">mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.kafka-clients/0.11.0.0_1</bundle>
-        <bundle>mvn:net.lr.reactive.component/rcomp-kafka/${project.version}</bundle>
-        <bundle>mvn:net.lr.reactive.component/kafka-appender/${project.version}</bundle>
+        <bundle>mvn:org.apache.karaf.rcomp/rcomp-kafka/${project.version}</bundle>
+        <bundle>mvn:org.apache.karaf.rcomp/kafka-appender/${project.version}</bundle>
         <config name=""></config>
     </feature>
     
     <feature name="rcomp-mqtt" version="${project.version}">
         <feature>rcomp-api</feature>
         <bundle dependency="true">mvn:org.eclipse.paho/org.eclipse.paho.client.mqttv3/1.1.1</bundle>
-        <bundle>mvn:net.lr.reactive.component/rcomp-mqtt/${project.version}</bundle>
+        <bundle>mvn:org.apache.karaf.rcomp/rcomp-mqtt/${project.version}</bundle>
     </feature>
     
     <feature name="rcomp-eventadmin" version="${project.version}">
         <feature>rcomp-api</feature>
         <feature>eventadmin</feature>
-        <bundle>mvn:net.lr.reactive.component/rcomp-eventadmin/${project.version}</bundle>
+        <bundle>mvn:org.apache.karaf.rcomp/rcomp-eventadmin/${project.version}</bundle>
     </feature>
     
     <feature name="rcomp-mail" version="${project.version}">
         <feature>rcomp-api</feature>
         <bundle dependency="true">mvn:javax.mail/mail/1.5.0-b01</bundle>
-        <bundle>mvn:net.lr.reactive.component/rcomp-mail/${project.version}</bundle>
+        <bundle>mvn:org.apache.karaf.rcomp/rcomp-mail/${project.version}</bundle>
     </feature>
     
     <feature name="rcomp-examples" version="${project.version}">
@@ -62,7 +62,7 @@
         <feature>rcomp-mail</feature>
         <feature>reactor</feature>
         <bundle>wrap:mvn:io.projectreactor.addons/reactor-extra/3.0.7.RELEASE</bundle>
-        <bundle>mvn:net.lr.reactive.component/rcomp-examples/${project.version}</bundle>
+        <bundle>mvn:org.apache.karaf.rcomp/rcomp-examples/${project.version}</bundle>
     </feature>
 
     <!-- Demo decanter kafka appender to show decanter works with rcomp -->
@@ -71,7 +71,7 @@
         <feature>rcomp-eventadmin</feature>
         <feature>rcomp-kafka</feature>
         <feature>reactor</feature>
-        <bundle>mvn:net.lr.reactive.component/kafka-appender/${project.version}</bundle>
+        <bundle>mvn:org.apache.karaf.rcomp/kafka-appender/${project.version}</bundle>
     </feature>
 
 

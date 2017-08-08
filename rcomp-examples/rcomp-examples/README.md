@@ -23,7 +23,7 @@ You also need a MQTT client.
 
 ```
 config:property-set -p component.mqtt.MqttComponent serverUrl tcp://localhost:1883
-feature:repo-add mvn:net.lr.reactive.component/rcomp-features/1.0.0-SNAPSHOT/xml/features
+feature:repo-add mvn:org.apache.karaf.rcomp/rcomp-features/1.0.0-SNAPSHOT/xml/features
 feature:install rcomp-examples
 ```
 
