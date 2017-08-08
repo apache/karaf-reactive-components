@@ -19,24 +19,36 @@ package org.apache.karaf.rcomp.mqtt;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.karaf.rcomp.mqtt.MqttComponent;
+import org.apache.activemq.broker.BrokerService;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 
 import reactor.core.publisher.Flux;
 
-public class Test1 {
+public class MqttTest {
+    private static final String MQTT_PORT = "9141";
     Integer result = 0;
+    private BrokerService broker;
+    
+    @Before
+    public void startBroker() throws Exception {
+        broker = new BrokerService();
+        broker.setPersistent(false);
+        broker.addConnector("mqtt://localhost:" + MQTT_PORT);
+        broker.start();
+    }
 
     @Test
     public void testMQtt() throws Exception {
         CountDownLatch latch = new CountDownLatch(1);
-        MqttClient client = new MqttClient("tcp://localhost:1883", MqttClient.generateClientId(), new MemoryPersistence());
+        MqttClient client = new MqttClient("tcp://localhost:" + MQTT_PORT, MqttClient.generateClientId(), new MemoryPersistence());
         client.connect();
         MqttComponent mqtt = new MqttComponent();
         mqtt.client = client;
@@ -56,5 +68,10 @@ public class Test1 {
         Assert.assertEquals(2, result, 0.1);
         client.disconnect();
         client.close();
+    }
+    
+    @After
+    public void stopBroker() throws Exception {
+        broker.stop();
     }
 }
