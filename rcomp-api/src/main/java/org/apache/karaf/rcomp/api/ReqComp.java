@@ -16,12 +16,9 @@
  */
 package org.apache.karaf.rcomp.api;
 
-import java.lang.annotation.Repeatable;
-
 import aQute.bnd.annotation.headers.RequireCapability;
 
 @RequireCapability( ns="rcomp", filter="(rcomp=${value})")
-@Repeatable(ReqComps.class)
 public @interface ReqComp {
     String value();
 }
