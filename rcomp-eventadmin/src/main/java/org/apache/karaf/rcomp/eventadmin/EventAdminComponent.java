@@ -16,6 +16,7 @@
  */
 package org.apache.karaf.rcomp.eventadmin;
 
+import org.apache.karaf.rcomp.api.ProvComp;
 import org.apache.karaf.rcomp.api.RComponent;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -26,6 +27,7 @@ import org.osgi.service.event.EventAdmin;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 
+@ProvComp(name="eventAdmin")
 @Component(property="name=eventAdmin")
 public class EventAdminComponent implements RComponent {
     

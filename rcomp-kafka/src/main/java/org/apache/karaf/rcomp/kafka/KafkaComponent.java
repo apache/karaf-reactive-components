@@ -18,6 +18,7 @@ package org.apache.karaf.rcomp.kafka;
 
 import java.util.Dictionary;
 
+import org.apache.karaf.rcomp.api.ProvComp;
 import org.apache.karaf.rcomp.api.RComponent;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -27,6 +28,7 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 
+@ProvComp(name="kafka")
 @Component(immediate = true, 
     configurationPolicy = ConfigurationPolicy.REQUIRE,
     property = "name=kafka"

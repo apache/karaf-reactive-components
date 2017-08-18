@@ -14,32 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.karaf.rcomp.mail;
+package org.apache.karaf.rcomp.api;
 
-import javax.mail.Session;
-
-import org.apache.karaf.rcomp.api.ProvComp;
-import org.apache.karaf.rcomp.api.RComponent;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
-
-@ProvComp(name="mail")
-@Component(property="name=mail")
-public class MailComponent implements RComponent {
-    
-    @Reference
-    Session session;
-
-    @Override
-    public <T> Publisher<T> from(String topic, Class<T> type) {
-        throw new RuntimeException();
-    }  
-    
-    @Override
-    public <T> Subscriber<T> to(String destination, Class<T> type) {
-        return new MailDestination<T>(destination, type);
-    }
-
+public @interface ReqComps {
+    ReqComp[] value();
 }

@@ -19,6 +19,7 @@ package org.apache.karaf.rcomp.examples.mqtt;
 import java.time.Duration;
 
 import org.apache.karaf.rcomp.api.RComponent;
+import org.apache.karaf.rcomp.api.ReqComp;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -29,6 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import reactor.core.publisher.Flux;
 
+@ReqComp("mqtt")
 @Component(immediate=true)
 public class MqttEmitter {
     Logger LOG = LoggerFactory.getLogger(MqttEmitter.class);

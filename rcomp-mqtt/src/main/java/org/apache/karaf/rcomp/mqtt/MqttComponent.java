@@ -19,6 +19,7 @@ package org.apache.karaf.rcomp.mqtt;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.karaf.rcomp.api.ProvComp;
 import org.apache.karaf.rcomp.api.RComponent;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -30,6 +31,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 
+@ProvComp(name="mqtt")
 @Component(property="name=mqtt")
 public class MqttComponent implements RComponent {
     

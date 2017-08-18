@@ -17,6 +17,7 @@
 package org.apache.karaf.rcomp.examples.mqtt;
 
 import org.apache.karaf.rcomp.api.RComponent;
+import org.apache.karaf.rcomp.api.ReqComp;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.math.MathFlux;
 
+@ReqComp("mqtt")
 @Component(immediate=true)
 public class MqttExample {
     Logger LOG = LoggerFactory.getLogger(MqttExample.class);

@@ -13,5 +13,6 @@
     <modules>
         <module>rcomp-examples</module>
         <module>kafka-appender</module>
+        <module>rcomp-feature-shell</module>
     </modules>
 </project>

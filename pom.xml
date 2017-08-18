@@ -35,7 +35,7 @@
 	<properties>
 		<reactor.version>3.0.7.RELEASE</reactor.version>
 		<jetty.version>8.1.15.v20140411</jetty.version>
-		<cxf.version>3.1.2</cxf.version>
+		<cxf.version>3.1.12</cxf.version>
 		<bnd.version>3.4.0-SNAPSHOT</bnd.version>
 	</properties>
 
@@ -83,6 +83,12 @@
 			<version>6.0.0</version>
 			<scope>provided</scope>
 		</dependency>
+        <dependency>
+            <groupId>biz.aQute.bnd</groupId>
+            <artifactId>biz.aQute.bndlib</artifactId>
+            <version>3.4.0</version>
+            <scope>provided</scope>
+        </dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>

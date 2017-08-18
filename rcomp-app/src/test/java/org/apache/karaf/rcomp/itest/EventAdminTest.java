@@ -23,6 +23,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.Configuration;
@@ -31,7 +32,7 @@ import org.ops4j.pax.exam.junit.PaxExam;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
 
-@RunWith(PaxExam.class)
+//@RunWith(PaxExam.class)
 public class EventAdminTest {
     @Inject
     EventAdmin eventAdmin;
@@ -42,6 +43,7 @@ public class EventAdminTest {
     }
 
     @Test
+    @Ignore
     public void test() {
         Map<String, String> properties = new HashMap<>();
         eventAdmin.sendEvent(new Event("eainput", properties));

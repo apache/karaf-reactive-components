@@ -19,6 +19,7 @@ package org.apache.karaf.rcomp.examples.mqtt;
 import java.util.Map;
 
 import org.apache.karaf.rcomp.api.RComponent;
+import org.apache.karaf.rcomp.api.ReqComp;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,6 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import reactor.core.publisher.Flux;
 
+@ReqComp("eventAdmin")
 @Component(immediate=true)
 public class EventAdminExample {
     Logger LOG = LoggerFactory.getLogger(EventAdminExample.class);
