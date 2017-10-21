@@ -33,10 +33,10 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<reactor.version>3.0.7.RELEASE</reactor.version>
+		<reactor.version>3.1.0.RELEASE</reactor.version>
 		<jetty.version>8.1.15.v20140411</jetty.version>
 		<cxf.version>3.1.12</cxf.version>
-		<bnd.version>3.4.0-SNAPSHOT</bnd.version>
+		<bnd.version>3.5.0</bnd.version>
 	</properties>
 
 	<modules>
