@@ -51,16 +51,6 @@
         <module>rcomp-camel</module>
     </modules>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>bnd-3.4.0-rc2</id>
-            <url>https://bndtools.ci.cloudbees.com/job/bnd.next/600/artifact/dist/bundles/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
-
     <dependencies>
         <dependency>
             <groupId>org.reactivestreams</groupId>
@@ -87,7 +77,7 @@
         <dependency>
             <groupId>biz.aQute.bnd</groupId>
             <artifactId>biz.aQute.bndlib</artifactId>
-            <version>3.4.0</version>
+            <version>${bnd.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -120,7 +110,7 @@
             <dependency>
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-core</artifactId>
-                <version>3.0.7.RELEASE</version>
+                <version>${reactor.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -160,7 +150,7 @@
             <plugin>
                 <groupId>biz.aQute.bnd</groupId>
                 <artifactId>bnd-maven-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>${bnd.version}</version>
                 <executions>
                     <execution>
                         <goals>
