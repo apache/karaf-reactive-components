@@ -21,7 +21,7 @@
 
     <feature name="reactor" version="3.0.7">
         <bundle dependency="true">mvn:org.reactivestreams/reactive-streams/1.0.0</bundle>
-        <bundle>mvn:io.projectreactor/reactor-core/3.0.7.RELEASE</bundle>
+        <bundle>mvn:io.projectreactor/reactor-core/${reactor.version}</bundle>
     </feature>
 
     <feature name="rcomp-api" version="${project.version}">

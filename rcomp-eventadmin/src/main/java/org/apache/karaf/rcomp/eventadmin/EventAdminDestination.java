@@ -22,8 +22,10 @@ import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
+import org.slf4j.LoggerFactory;
 
 public class EventAdminDestination<T> implements Subscriber<T> {
+    private static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(EventAdminDestination.class);
     
     private EventAdmin client;
     private String topic;
