@@ -22,10 +22,10 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.reactivestreams.Subscriber;
+import org.apache.karaf.rcomp.api.CloseableSubscriber;
 import org.reactivestreams.Subscription;
 
-public class MailDestination<T> implements Subscriber<T> {
+public class MailDestination<T> implements CloseableSubscriber<T> {
 
     private String destination;
     private Subscription subscription;
@@ -65,6 +65,11 @@ public class MailDestination<T> implements Subscriber<T> {
 
     @Override
     public void onComplete() {
+    }
+
+    @Override
+    public void close() {
+        subscription.cancel();
     }
 
 }

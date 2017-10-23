@@ -46,12 +46,10 @@ public class MqttEmitter {
         Flux.interval(Duration.ofSeconds(1))
             .map(ByteArrayConverter::fromLong)
             .subscribe(toTopic);
-        LOG.info("mqtt test component started4");
     }
     
     @Deactivate
     public void stop() throws Exception {
-        LOG.info("mqtt test component stopped");
         toTopic.onComplete();
     }
 

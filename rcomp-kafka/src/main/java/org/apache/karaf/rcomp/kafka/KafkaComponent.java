@@ -18,6 +18,7 @@ package org.apache.karaf.rcomp.kafka;
 
 import java.util.Dictionary;
 
+import org.apache.karaf.rcomp.api.CloseableSubscriber;
 import org.apache.karaf.rcomp.api.ProvComp;
 import org.apache.karaf.rcomp.api.RComponent;
 import org.osgi.service.component.ComponentContext;
@@ -26,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
 
 @ProvComp(name="kafka")
 @Component(immediate = true, 
@@ -58,7 +58,7 @@ public class KafkaComponent implements RComponent {
     }
 
     @Override
-    public <T> Subscriber<T> to(String topic, Class<T> type) {
+    public <T> CloseableSubscriber<T> to(String topic, Class<T> type) {
         return new KafkaDestination<T>(ConfigMapper.mapProducer(rawConfig), topic, type);
     }
 

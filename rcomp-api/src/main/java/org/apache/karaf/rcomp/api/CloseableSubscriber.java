@@ -16,9 +16,10 @@
  */
 package org.apache.karaf.rcomp.api;
 
-import aQute.bnd.annotation.headers.ProvideCapability;
+import java.io.Closeable;
 
-@ProvideCapability( ns="rcomp")
-public @interface ProvComp {
-    String name();
+import org.reactivestreams.Subscriber;
+
+public interface CloseableSubscriber<T> extends Subscriber<T>, Closeable {
+    
 }

@@ -21,6 +21,8 @@ import org.apache.camel.component.reactive.streams.api.CamelReactiveStreams;
 import org.apache.camel.component.reactive.streams.api.CamelReactiveStreamsService;
 import org.apache.camel.core.osgi.OsgiDefaultCamelContext;
 import org.apache.camel.core.osgi.OsgiServiceRegistry;
+import org.apache.karaf.rcomp.api.CloseableSubscriber;
+import org.apache.karaf.rcomp.api.CloseableSubscriberAdapter;
 import org.apache.karaf.rcomp.api.ProvComp;
 import org.apache.karaf.rcomp.api.RComponent;
 import org.osgi.framework.BundleContext;
@@ -29,7 +31,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
 
 @ProvComp(name = "camel")
 @Component(property = "name=camel")
@@ -69,7 +70,7 @@ public class CamelComponent implements RComponent {
     }
 
     @Override
-    public <T> Subscriber<T> to(String topic, Class<T> type) {
-        return camelreactive.subscriber(topic, type);
+    public <T> CloseableSubscriber<T> to(String topic, Class<T> type) {
+        return new CloseableSubscriberAdapter<T>(camelreactive.subscriber(topic, type));
     }
 }

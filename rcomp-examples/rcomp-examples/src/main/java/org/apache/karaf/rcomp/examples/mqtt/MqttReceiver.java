@@ -43,7 +43,6 @@ public class MqttReceiver implements Consumer<Double>{
 
     @Activate
     public void start() throws Exception {
-        LOG.info("Starting mqtt receiver");
         Publisher<byte[]> fromTopic = mqtt.from("output", byte[].class);
         flux = Flux.from(fromTopic)
             .map(ByteArrayConverter::asDouble)

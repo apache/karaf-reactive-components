@@ -16,6 +16,7 @@
  */
 package org.apache.karaf.rcomp.eventadmin;
 
+import org.apache.karaf.rcomp.api.CloseableSubscriber;
 import org.apache.karaf.rcomp.api.ProvComp;
 import org.apache.karaf.rcomp.api.RComponent;
 import org.osgi.framework.BundleContext;
@@ -25,7 +26,6 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.event.EventAdmin;
 import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
 
 @ProvComp(name="eventAdmin")
 @Component(property="name=eventAdmin")
@@ -52,7 +52,7 @@ public class EventAdminComponent implements RComponent {
     }  
     
     @Override
-    public <T> Subscriber<T> to(String topic, Class<T> type) {
+    public <T> CloseableSubscriber<T> to(String topic, Class<T> type) {
         return new EventAdminDestination<T>(client, topic, type);
     }
 

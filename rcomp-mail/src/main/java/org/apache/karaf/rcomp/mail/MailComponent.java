@@ -18,12 +18,12 @@ package org.apache.karaf.rcomp.mail;
 
 import javax.mail.Session;
 
+import org.apache.karaf.rcomp.api.CloseableSubscriber;
 import org.apache.karaf.rcomp.api.ProvComp;
 import org.apache.karaf.rcomp.api.RComponent;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
 
 @ProvComp(name="mail")
 @Component(property="name=mail")
@@ -38,7 +38,7 @@ public class MailComponent implements RComponent {
     }  
     
     @Override
-    public <T> Subscriber<T> to(String destination, Class<T> type) {
+    public <T> CloseableSubscriber<T> to(String destination, Class<T> type) {
         return new MailDestination<T>(destination, type);
     }
 

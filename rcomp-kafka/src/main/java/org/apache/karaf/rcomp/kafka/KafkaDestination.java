@@ -22,13 +22,13 @@ import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
-import org.reactivestreams.Subscriber;
+import org.apache.karaf.rcomp.api.CloseableSubscriber;
 import org.reactivestreams.Subscription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("rawtypes")
-public class KafkaDestination<T> implements Subscriber<T>, AutoCloseable {
+public class KafkaDestination<T> implements CloseableSubscriber<T> {
     private final static Logger LOGGER = LoggerFactory.getLogger(KafkaDestination.class);
     private String topic;
     private Subscription subscription;
@@ -91,7 +91,7 @@ public class KafkaDestination<T> implements Subscriber<T>, AutoCloseable {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         if (subscription != null) {
             subscription.cancel();
             subscription = null;

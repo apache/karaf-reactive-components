@@ -18,15 +18,13 @@ package org.apache.karaf.rcomp.eventadmin;
 
 import java.util.Map;
 
+import org.apache.karaf.rcomp.api.CloseableSubscriber;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
-import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
-import org.slf4j.LoggerFactory;
 
-public class EventAdminDestination<T> implements Subscriber<T> {
-    private static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(EventAdminDestination.class);
-    
+public class EventAdminDestination<T> implements CloseableSubscriber<T> {
+
     private EventAdmin client;
     private String topic;
     private Subscription subscription;
@@ -74,6 +72,11 @@ public class EventAdminDestination<T> implements Subscriber<T> {
 
     @Override
     public void onComplete() {
+    }
+
+    @Override
+    public void close() {
+        this.subscription.cancel();
     }
 
 }

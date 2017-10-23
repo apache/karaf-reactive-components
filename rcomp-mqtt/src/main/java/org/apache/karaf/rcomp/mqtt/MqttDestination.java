@@ -16,12 +16,12 @@
  */
 package org.apache.karaf.rcomp.mqtt;
 
+import org.apache.karaf.rcomp.api.CloseableSubscriber;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
-public class MqttDestination<T> implements Subscriber<T>, AutoCloseable {
+public class MqttDestination<T> implements CloseableSubscriber<T> {
     
     private MqttClient client;
     private String topic;
@@ -68,7 +68,7 @@ public class MqttDestination<T> implements Subscriber<T>, AutoCloseable {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         if (subscription != null) {
             subscription.cancel();
             subscription = null;

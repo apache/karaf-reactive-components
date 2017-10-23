@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.karaf.rcomp.examples.mqtt;
+package org.apache.karaf.rcomp.examples.eventadmin;
 
 import java.util.Map;
 
