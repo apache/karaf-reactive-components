@@ -45,7 +45,7 @@
             <version>${rcomp.version}</version>
         </dependency>
 
-		<!-- Basic Felix bundles -->
+        <!-- Basic Felix bundles -->
         <dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.framework</artifactId>
@@ -136,7 +136,7 @@
         <dependency>
             <groupId>org.ops4j.pax.logging</groupId>
             <artifactId>pax-logging-service</artifactId>
-            <version>1.8.5</version>
+            <version>1.10.1</version>
         </dependency>
 
         <dependency>
@@ -204,23 +204,6 @@
             <artifactId>commons-collections</artifactId>
             <version>3.2.2</version>
         </dependency>
-<!-- 
-		<dependency>
-		    <groupId>org.apache.activemq</groupId>
-		    <artifactId>activemq-osgi</artifactId>
-		    <version>5.15.0</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.ow2.asm</groupId>
-		    <artifactId>asm-all</artifactId>
-		    <version>5.2</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.aries.blueprint</groupId>
-		    <artifactId>org.apache.aries.blueprint.core</artifactId>
-		    <version>1.8.2</version>
-		</dependency>
-         -->
     </dependencies>
 
     <build>
